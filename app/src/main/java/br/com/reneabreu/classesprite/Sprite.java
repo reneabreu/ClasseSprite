@@ -19,6 +19,8 @@ public class Sprite {
     private int currentFrame = 1;
     // Current animation state in sprite sheet cols
     private int currentAnimationState = 0;
+    // Control frames quantity in current animation state
+    private int framesInCurrentAnimation;
 
     public Sprite(DrawView drawView, Bitmap bmp, int rows, int columns){
         this.drawView = drawView;
@@ -42,12 +44,22 @@ public class Sprite {
         this.cols = columns;
     }
 
+    // Change Animation
     public void SetAnimationState(int state){
         this.currentAnimationState = state;
+
+        this.framesInCurrentAnimation = cols;
+    }
+
+    // In case current animation have less frames set the number of frames
+    public void SetAnimationState(int state, int framesInCurrentState){
+        this.currentAnimationState = state;
+
+        this.framesInCurrentAnimation = framesInCurrentState;
     }
 
     public void Update(){
-        currentFrame = ++currentFrame % cols;
+        currentFrame = ++currentFrame % framesInCurrentAnimation;
     }
 
     public void Draw(Canvas canvas) {
